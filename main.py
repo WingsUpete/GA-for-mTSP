@@ -1,6 +1,7 @@
 from galogic import *
 import matplotlib.pyplot as plt
 import progressbar
+
 pbar = progressbar.ProgressBar()
 
 # Add Dustbins
@@ -8,12 +9,12 @@ for i in range(numNodes):
     RouteManager.addDustbin(Dustbin())
 
 random.seed(seedValue)
-yaxis = [] # Fittest value (distance)
-xaxis = [] # Generation count
+yaxis = []  # Fittest value (distance)
+xaxis = []  # Generation count
 
 pop = Population(populationSize, True)
 globalRoute = pop.getFittest()
-print ('Initial minimum distance: ' + str(globalRoute.getDistance()))
+print('Initial minimum distance: ' + str(globalRoute.getDistance()))
 
 # Start evolving
 for i in pbar(range(numGenerations)):
@@ -24,8 +25,8 @@ for i in pbar(range(numGenerations)):
     yaxis.append(localRoute.getDistance())
     xaxis.append(i)
 
-print ('Global minimum distance: ' + str(globalRoute.getDistance()))
-print ('Final Route: ' + globalRoute.toString())
+print('Global minimum distance: ' + str(globalRoute.getDistance()))
+print('Final Route: ' + globalRoute.toString())
 
 fig = plt.figure()
 
