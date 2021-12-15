@@ -12,9 +12,9 @@ if not os.path.isdir(LOGGING_FOLDER):
 
 
 class Logger:
-    def __init__(self, activate=True, logging_folder=LOGGING_FOLDER):
+    def __init__(self, activate=True, logging_folder=LOGGING_FOLDER, time_tag=None, std_out=True):
         self.activate = activate
-        self.time_tag = datetime.now().strftime("%Y%m%d_%H_%M_%S")
+        self.time_tag = time_tag if time_tag else datetime.now().strftime("%Y%m%d_%H_%M_%S")
         if self.activate:
             self.logger = logging.getLogger()
             self.logger.setLevel(logging.DEBUG)
@@ -24,16 +24,16 @@ class Logger:
 
             # Create a File Handler
             fName = '{}.log'.format(self.time_tag)
-
             self.f_handler = logging.FileHandler(os.path.join(self.logging_folder, fName))
             self.f_handler.terminator = ''
+            self.logger.addHandler(self.f_handler)
 
             # Create an stdout Stream Handler
-            self.stdout_handler = logging.StreamHandler(sys.stdout)
-            self.stdout_handler.terminator = ''
-
-            self.logger.addHandler(self.f_handler)
-            self.logger.addHandler(self.stdout_handler)
+            self.std_out = std_out
+            if self.std_out:
+                self.stdout_handler = logging.StreamHandler(sys.stdout)
+                self.stdout_handler.terminator = ''
+                self.logger.addHandler(self.stdout_handler)
 
     """
         Log a message into stdout and log file simultaneously
@@ -45,7 +45,8 @@ class Logger:
     def close(self):
         if self.activate:
             self.f_handler.close()
-            self.stdout_handler.close()
+            if self.std_out:
+                self.stdout_handler.close()
 
 
 if __name__ == '__main__':

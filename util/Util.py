@@ -1,4 +1,5 @@
 import random
+import os
 
 import matplotlib.pyplot as plt
 
@@ -43,3 +44,12 @@ def plotGD(xs, ys, label='GA', logr=None, save=True, saveFigPath=None, show=True
 
     if show:
         plt.show()
+
+
+def path2FileNameWithoutExt(path):
+    """
+    get file name without extension from path
+    :param path: file path
+    :return: file name without extension
+    """
+    return os.path.splitext(os.path.basename(path))[0]
