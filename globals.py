@@ -11,7 +11,7 @@ mutationRate = 0.02
 tournamentSize = 10
 elitism = True  # If fittest chromosome has to be passed directly to next generation
 # number of trucks
-numTrucks = 10
+numSalesmen = 10
 
 # Defines range for coordinates when cities are randomly scattered
 xMax = 1000

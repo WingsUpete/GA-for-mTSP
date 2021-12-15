@@ -1,7 +1,7 @@
 import random
 
 from globals import *
-from city import City, Cities
+from .city import City, Cities
 from util import route_lengths
 
 
@@ -19,7 +19,7 @@ class Routes:
         # 1D (m,) array having route lengths (here, route length = number of nodes)
         self.routeLengths = route_lengths()
 
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             self.routes.append([])
 
         # fitness value and total distance of all routes
@@ -45,7 +45,7 @@ class Routes:
         random.shuffle(self.base)
 
         k = 0
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             self.routes[i].append(Cities.getCity(0))  # add same first node for each route
             for j in range(self.routeLengths[i] - 1):
                 self.routes[i].append(self.base[k])  # add shuffled values for rest
@@ -82,7 +82,7 @@ class Routes:
         if self.distance == 0:
             routeDistance = 0
 
-            for i in range(numTrucks):
+            for i in range(numSalesmen):
                 for j in range(self.routeLengths[i]):
                     fromCity = self.getCity(i, j)
 
@@ -108,13 +108,13 @@ class Routes:
         Returns routes in the form of a string
         """
         geneString = ''
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             geneString += 'Truck %d [len = %d]: ' % (i, self.routeLengths[i])
             subRouteStr = []
             for j in range(self.routeLengths[i]):
                 subRouteStr.append(str(self.getCity(i, j).id))
             geneString += ' --> '.join(subRouteStr)
-            if i != numTrucks - 1:
+            if i != numSalesmen - 1:
                 geneString += '\n'
 
         return geneString

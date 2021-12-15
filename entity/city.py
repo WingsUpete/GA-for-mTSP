@@ -29,7 +29,7 @@ class City:
         """
         Gives string representation of the Object with coordinates
         """
-        return '(%.f,%.f)' % (float(self.x), float(self.y))
+        return '(%d|%d,%d)' % (self.id, int(self.x), int(self.y))
 
     def checkNull(self):
         """

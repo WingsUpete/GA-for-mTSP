@@ -1,16 +1,13 @@
-"""
-The main helper class for Genetic Algorithm to perform
-crossover, mutation on populations to evolve them
-"""
 import random
 
 from globals import *
-from population import Population
-from city import City, Cities
-from routes import Routes
+from entity import Population, City, Cities, Routes
 
 
-class GA:
+class GABaseline:
+    """
+    The main helper class for Genetic Algorithm to perform crossover, mutation on populations to evolve them
+    """
     @classmethod
     def evolvePopulation(cls, pop):
         """
@@ -54,11 +51,11 @@ class GA:
         parent1.base = [parent1.routes[0][0]]
         parent2.base = [parent2.routes[0][0]]
 
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             for j in range(1, parent1.routeLengths[i]):
                 parent1.base.append(parent1.routes[i][j])
 
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             for j in range(1, parent2.routeLengths[i]):
                 parent2.base.append(parent2.routes[i][j])
 
@@ -75,7 +72,7 @@ class GA:
 
         k = 0
         child.base.pop(0)
-        for i in range(numTrucks):
+        for i in range(numSalesmen):
             child.routes[i].append(Cities.getCity(0))  # add same first node for each routes
             for j in range(child.routeLengths[i] - 1):
                 child.routes[i].append(child.base[k])  # add shuffled values for rest
@@ -90,8 +87,8 @@ class GA:
         index1 = 0
         index2 = 0
         while index1 == index2:
-            index1 = random.randint(0, numTrucks - 1)
-            index2 = random.randint(0, numTrucks - 1)
+            index1 = random.randint(0, numSalesmen - 1)
+            index2 = random.randint(0, numSalesmen - 1)
         # print ('Indexes selected: ' + str(index1) + ',' + str(index2))
 
         # generate replacement range for 1

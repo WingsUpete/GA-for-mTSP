@@ -2,7 +2,7 @@ import random
 
 import matplotlib.pyplot as plt
 
-from globals import numCities, numTrucks
+from globals import numCities, numSalesmen
 
 
 def random_range(n, total):
@@ -18,15 +18,15 @@ def route_lengths():
     Randomly distribute number of cities to subroutes
     Maximum and minimum values are maintained to reach optimal result
     """
-    upper = (numCities + numTrucks - 1)
-    fa = upper / numTrucks * 1.6  # max route length
-    fb = upper / numTrucks * 0.6  # min route length
-    a = random_range(numTrucks, upper)
+    upper = (numCities + numSalesmen - 1)
+    fa = upper / numSalesmen * 1.6  # max route length
+    fb = upper / numSalesmen * 0.6  # min route length
+    a = random_range(numSalesmen, upper)
     while 1:
         if all(fb < i < fa for i in a):
             break
         else:
-            a = random_range(numTrucks, upper)
+            a = random_range(numSalesmen, upper)
     return a
 
 
