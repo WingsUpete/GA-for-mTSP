@@ -24,11 +24,11 @@ class Dustbin:
         """
         return math.sqrt(math.pow(self.x - db.x, 2) + math.pow(self.y - db.y, 2))
 
-    def toString(self):
+    def __str__(self):
         """
         Gives string representation of the Object with coordinates
         """
-        return '(%.2f, %.2f)' % (float(self.x), float(self.y))
+        return '(%.f,%.f)' % (float(self.x), float(self.y))
 
     def checkNull(self):
         """

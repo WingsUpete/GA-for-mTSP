@@ -3,19 +3,19 @@ import random
 '''
 Contains all global variables specific to simulation
 '''
-# Defines range for coordinates when dustbins are randomly scattered
-xMax = 1000
-yMax = 1000
-seedValue = 1
-numNodes = 200
+seedValue = 1   # TODO: if random seed is set, is it meaningful for us to repeat running 30 times?
 numGenerations = 70
 # size of population
 populationSize = 100
 mutationRate = 0.02
 tournamentSize = 10
-elitism = True
+elitism = True  # If fittest chromosome has to be passed directly to next generation
 # number of trucks
 numTrucks = 10
+# Defines range for coordinates when dustbins are randomly scattered
+xMax = 1000
+yMax = 1000
+numNodes = 200
 
 
 def random_range(n, total):
