@@ -8,7 +8,7 @@ import progressbar
 
 import globals
 from entity import City, Cities, Population
-from ga import GABaseline
+from ga import GABaseline, GAMyAlgo
 from util import Logger, plotGD
 
 logging.getLogger('matplotlib.font_manager').disabled = True
@@ -51,6 +51,8 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
     # Specify GA
     if GA_type == 'baseline':
         GA = GABaseline
+    elif GA_type == 'myAlgo':
+        GA = GAMyAlgo
     else:
         GA = GABaseline
 
