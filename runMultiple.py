@@ -11,7 +11,7 @@ if __name__ == '__main__':
     """
     Folder Name: <data>_<algo>_<runTimes>_<m>_<gen>_<pop>_<tournament>_<time>
     > Usage Example:
-        python runMultiple.py -d instances/mtsp51.txt -ga baseline -so 1 -g 200 -p 100 -m 5 -dc 20000 -r 30
+        python runMultiple.py -d instances/mtsp51.txt -ga baseline -so 1 -m 5 -g 200 -p 100 -dc 20000 -r 30
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--data', type=str, default=None, help='Data instance of cities, default = %s' % str(None))
@@ -24,6 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--tournament', type=int, default=globals.tournamentSize, help='Specify the tournament size, default = %d' % globals.tournamentSize)
     parser.add_argument('-dc', '--distCal', type=int, default=globals.maxNDistCal, help='Specify the maximum number of distance calculations allowed (a factor which will be multiplied by N later), default = %d' % globals.maxNDistCal)
     parser.add_argument('-r', '--runTimes', type=int, default=globals.nIndependentRuns, help='Specify the number of times to run independently, default = %d' % globals.nIndependentRuns)
+    parser.add_argument('-pbar', '--pbar', type=int, default=0, help='Specify whether to show progress bar (for ipynb), default = %d' % 0)
 
     FLAGS, unparsed = parser.parse_known_args()
 
@@ -51,10 +52,10 @@ if __name__ == '__main__':
         print('------------------------------------------------------------------------------------------------------')
         print('Round %d' % (i + 1))
 
-        os.system('python main.py -d %s -ga %s -ld %s -so %d -fd %s -m %d -g %d -p %d -t %d -dc %d -rid %d' % (
+        os.system('python main.py -d %s -ga %s -ld %s -so %d -fd %s -m %d -g %d -p %d -t %d -dc %d -rid %d -pbar %d' % (
             FLAGS.data, FLAGS.ga, runLogDir, FLAGS.stdout, figSaveDir,
             FLAGS.salesmen, FLAGS.generation, FLAGS.population, FLAGS.tournament, FLAGS.distCal,
-            i + 1
+            i + 1, FLAGS.pbar
         ))
 
         time.sleep(1)   # Wait for 1 sec, then go to next round
