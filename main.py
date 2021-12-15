@@ -6,9 +6,9 @@ import progressbar
 
 pbar = progressbar.ProgressBar()
 
-# Add Dustbins
-for i in range(numNodes):
-    RouteManager.addDustbin(Dustbin())
+# Add Cities
+for i in range(numCities):
+    Cities.addCity(City(cid=i))
 
 if seedValue is not None:
     random.seed(seedValue)

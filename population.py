@@ -1,10 +1,10 @@
-"""
-Collection of routes (chromosomes)
-"""
-from route import *
+from routes import *
 
 
 class Population:
+    """
+    Collection of routes (chromosomes)
+    """
     routes = []
 
     # Good old constructor
@@ -12,25 +12,25 @@ class Population:
         self.populationSize = populationSz
         if initialise:
             for i in range(populationSz):
-                newRoute = Route()              # Create empty route
-                newRoute.generateIndividual()   # Add route sequences
-                self.routes.append(newRoute)    # Add route to the population
+                newRoute = Routes()             # Create empty routes
+                newRoute.generateIndividual()   # Generate routes sequences
+                self.routes.append(newRoute)    # Add routes to the population
 
-    def saveRoute(self, index, route):
+    def saveRoute(self, index, curRoutes):
         """
-        Saves the route passed as argument at index
+        Saves the routes passed as argument at index
         """
-        self.routes[index] = route
+        self.routes[index] = curRoutes
 
     def getRoute(self, index):
         """
-        Returns route at index
+        Returns routes at index
         """
         return self.routes[index]
 
     def getFittest(self):
         """
-        Returns route with maximum fitness value
+        Returns routes with maximum fitness value
         """
         fittest = self.routes[0]
 

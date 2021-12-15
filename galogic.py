@@ -4,7 +4,7 @@ crossover, mutation on populations to evolve them
 """
 from population import *
 from globals import *
-from dustbin import Dustbin
+from city import City, Cities
 
 
 class GA:
@@ -40,32 +40,32 @@ class GA:
         """
         Function to implement crossover operation
         """
-        child = Route()
-        child.base.append(Dustbin(-1, -1))  # since size is (numNodes - 1) by default
+        child = Routes()
+        child.base.append(City(-1, -1))  # since size is (numCities - 1) by default
         startPos = 0
         endPos = 0
         while startPos >= endPos:
-            startPos = random.randint(1, numNodes - 1)
-            endPos = random.randint(1, numNodes - 1)
+            startPos = random.randint(1, numCities - 1)
+            endPos = random.randint(1, numCities - 1)
 
-        parent1.base = [parent1.route[0][0]]
-        parent2.base = [parent2.route[0][0]]
+        parent1.base = [parent1.routes[0][0]]
+        parent2.base = [parent2.routes[0][0]]
 
         for i in range(numTrucks):
             for j in range(1, parent1.routeLengths[i]):
-                parent1.base.append(parent1.route[i][j])
+                parent1.base.append(parent1.routes[i][j])
 
         for i in range(numTrucks):
             for j in range(1, parent2.routeLengths[i]):
-                parent2.base.append(parent2.route[i][j])
+                parent2.base.append(parent2.routes[i][j])
 
-        for i in range(1, numNodes):
+        for i in range(1, numCities):
             if i < endPos < startPos:
                 child.base[i] = parent1.base[i]
 
-        for i in range(numNodes):
-            if not (child.containsDustbin(parent2.base[i])):
-                for i1 in range(numNodes):
+        for i in range(numCities):
+            if not (child.containsCity(parent2.base[i])):
+                for i1 in range(numCities):
                     if child.base[i1].checkNull():
                         child.base[i1] = parent2.base[i]
                         break
@@ -73,9 +73,9 @@ class GA:
         k = 0
         child.base.pop(0)
         for i in range(numTrucks):
-            child.route[i].append(RouteManager.getDustbin(0))  # add same first node for each route
+            child.routes[i].append(Cities.getCity(0))  # add same first node for each routes
             for j in range(child.routeLengths[i] - 1):
-                child.route[i].append(child.base[k])  # add shuffled values for rest
+                child.routes[i].append(child.base[k])  # add shuffled values for rest
                 k += 1
         return child
 
@@ -112,20 +112,20 @@ class GA:
         if random.randrange(1) < mutationRate:
             # pop all the values to be replaced
             for i in range(route1startPos, route1lastPos + 1):
-                swap1.append(route.route[index1].pop(route1startPos))
+                swap1.append(route.routes[index1].pop(route1startPos))
 
             for i in range(route2startPos, route2lastPos + 1):
-                swap2.append(route.route[index2].pop(route2startPos))
+                swap2.append(route.routes[index2].pop(route2startPos))
 
             del1 = (route1lastPos - route1startPos + 1)
             del2 = (route2lastPos - route2startPos + 1)
 
             # add to new location by pushing
-            route.route[index1][route1startPos:route1startPos] = swap2
-            route.route[index2][route2startPos:route2startPos] = swap1
+            route.routes[index1][route1startPos:route1startPos] = swap2
+            route.routes[index2][route2startPos:route2startPos] = swap1
 
-            route.routeLengths[index1] = len(route.route[index1])
-            route.routeLengths[index2] = len(route.route[index2])
+            route.routeLengths[index1] = len(route.routes[index1])
+            route.routeLengths[index2] = len(route.routes[index2])
 
     @classmethod
     def tournamentSelection(cls, pop):
