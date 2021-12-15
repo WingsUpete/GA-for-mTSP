@@ -11,7 +11,7 @@ if __name__ == '__main__':
     """
     Folder Name: <data>_<algo>_<runTimes>_<m>_<gen>_<pop>_<tournament>_<time>
     > Usage Example:
-        python runMultiple.py -d instances/mtsp51.txt -ga baseline -so 1 -m 5 -g 200 -p 100 -dc 20000 -r 30
+        python runMultiple.py -d instances/mtsp51.txt -ga baseline -so 0 -m 5 -g 200 -p 100 -dc 20000 -r 30
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--data', type=str, default=None, help='Data instance of cities, default = %s' % str(None))
