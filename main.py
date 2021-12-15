@@ -3,14 +3,13 @@ import time
 import random
 import argparse
 import os
-from datetime import datetime
 
 import progressbar
 
 import globals
 from entity import City, Cities, Population
 from ga import GABaseline
-from util import Logger, plotGD, path2FileNameWithoutExt
+from util import Logger, plotGD
 
 logging.getLogger('matplotlib.font_manager').disabled = True
 
@@ -22,7 +21,7 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
     if dataPath is None:
         for i in range(globals.numCities):
             Cities.addCity(City(cid=i))
-        logr.log('> Randomly generated %d cities\n' % globals.numCities)
+        logr.log('> Randomly generated %d cities\n' % Cities.numberOfCities())
     else:
         # Load from instances
         logr.log('> Loading cities from %s\n' % dataPath)
@@ -34,6 +33,7 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
                     logr.log('\t>> %d cities in total to be loaded\n' % int(items[0]))
                 else:
                     Cities.addCity(City(x=int(items[1]), y=int(items[2]), cid=int(items[0]) - 1))
+        globals.numCities = Cities.numberOfCities()
         logr.log('> %d cities loaded from %s\n' % (Cities.numberOfCities(), dataPath))
     if maxNDC != -1:
         maxNDC *= Cities.numberOfCities()

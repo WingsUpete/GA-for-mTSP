@@ -45,8 +45,8 @@ class GABaseline:
         startPos = 0
         endPos = 0
         while startPos >= endPos:
-            startPos = random.randint(1, globals.numCities - 1)
-            endPos = random.randint(1, globals.numCities - 1)
+            startPos = random.randint(1, Cities.numberOfCities() - 1)
+            endPos = random.randint(1, Cities.numberOfCities() - 1)
 
         parent1.base = [parent1.routes[0][0]]
         parent2.base = [parent2.routes[0][0]]
@@ -59,13 +59,13 @@ class GABaseline:
             for j in range(1, parent2.routeLengths[i]):
                 parent2.base.append(parent2.routes[i][j])
 
-        for i in range(1, globals.numCities):
+        for i in range(1, Cities.numberOfCities()):
             if i < endPos < startPos:
                 child.base[i] = parent1.base[i]
 
-        for i in range(globals.numCities):
+        for i in range(Cities.numberOfCities()):
             if not (child.containsCity(parent2.base[i])):
-                for i1 in range(globals.numCities):
+                for i1 in range(Cities.numberOfCities()):
                     if child.base[i1].checkNull():
                         child.base[i1] = parent2.base[i]
                         break
