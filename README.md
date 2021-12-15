@@ -6,7 +6,7 @@ Repository initially forked from https://github.com/Anupal/GA-for-mTSP.
 
 ## Introduction
 
-This is a project from course - Advanced Artificial Intelligence in SUSTech (2021, Fall). The aim is to implement a genetic algorithm design for mTSP (Multiple Traveling Salesman Problem) which is able to beat the baseline algorithm implemented in https://github.com/Anupal/GA-for-mTSP subject to various constraints.
+This is a project from course - Advanced Artificial Intelligence in SUSTech (2021, Fall). The aim is to implement a genetic algorithm design for mTSP (Multiple Traveling Salesman Problem) which is able to beat the [baseline](https://github.com/Anupal/GA-for-mTSP) algorithm subject to various constraints.
 
 <br>
 
@@ -14,7 +14,7 @@ This is a project from course - Advanced Artificial Intelligence in SUSTech (202
 
 ### The Multiple Traveling Salesman Problem (mTSP) - Definition
 
-Given (reference: https://neos-guide.org/content/multiple-traveling-salesman-problem-mtsp):
+Given ([reference](https://neos-guide.org/content/multiple-traveling-salesman-problem-mtsp)):
 
 -   a set of `n` cities,
 -   `m` salesmen,
@@ -23,9 +23,9 @@ Given (reference: https://neos-guide.org/content/multiple-traveling-salesman-pro
 
 the objective of mTSP is to provide a set of routes for `m` salesmen with a minimum total cost.
 
-Additional constraints are as follow:
+Additional constraints are as follows:
 
--   All of the routes must start and end at the same depot.
+-   All routes must start and end at the same depot.
 -   **Each city must be visited exactly once by only one salesman**.
 
 <br>
@@ -48,6 +48,11 @@ subject to:
 -   General constraints for 0-1 binary variable `x`:<img src="https://render.githubusercontent.com/render/math?math=x_{i, j} \in \{0, 1\}, \forall (i,j) \in A." alt="" style="zoom:150%;" />
 
 <br>
+
+## Reference
+- https://github.com/Anupal/GA-for-mTSP
+- https://link.springer.com/content/pdf/10.1007%2F978-3-642-15220-7.pdf
+- https://neos-guide.org/content/multiple-traveling-salesman-problem-mtsp
 
 ## Appendix
 
