@@ -1,40 +1,63 @@
+import logging
 import time
 
-from galogic import *
-import matplotlib.pyplot as plt
 import progressbar
 
-pbar = progressbar.ProgressBar()
+from galogic import *
+from util import Logger, plotGD
 
-# Add Cities
-for i in range(numCities):
-    Cities.addCity(City(cid=i))
+logging.getLogger('matplotlib.font_manager').disabled = True
 
-if seedValue is not None:
-    random.seed(seedValue)
-yaxis = []  # Fittest value (distance)
-xaxis = []  # Generation count
 
-pop = Population(populationSize, True)
-globalRoute = pop.getFittest()
-print('Initial minimum distance: %.6f' % globalRoute.getDistance())
+def runGA4mTSP():
+    pbar = progressbar.ProgressBar()
 
-# Start evolving
-startT = time.time()
-for i in pbar(range(numGenerations)):
-    pop = GA.evolvePopulation(pop)
-    localRoute = pop.getFittest()
-    if globalRoute.getDistance() > localRoute.getDistance():
-        globalRoute = localRoute
-    yaxis.append(localRoute.getDistance())
-    xaxis.append(i)
-endT = time.time()
-print('GA Runtime = %.4f sec' % (endT - startT))
+    # Add Cities
+    for i in range(numCities):
+        Cities.addCity(City(cid=i))
 
-print('Global minimum distance: %.6f' % globalRoute.getDistance())
-print('Final Route:\n%s' % globalRoute)
+    if seedValue is not None:
+        random.seed(seedValue)
 
-fig = plt.figure()
+    # Initial solution
+    pop = Population(populationSize, True)
+    globalRoute = pop.getFittest()
+    logger.log('> Initial minimum distance: %.6f\n' % globalRoute.getDistance())
 
-plt.plot(xaxis, yaxis, 'r-')
-plt.show()
+    # Start GA
+    logger.log('> Starting running GA.\n')
+    genCnt = 1
+    xAxis = []  # Generation count
+    yAxis = []  # Fittest value (distance)
+    startT = time.time()
+    for i in pbar(range(numGenerations)):
+        pop = GA.evolvePopulation(pop)
+        localRoute = pop.getFittest()
+
+        if globalRoute.getDistance() > localRoute.getDistance():
+            globalRoute = localRoute
+
+        yAxis.append(localRoute.getDistance())
+        xAxis.append(genCnt)
+        genCnt += 1
+    endT = time.time()
+
+    # Record data
+    logger.log('# Generation Distance\n')
+    for i in range(len(xAxis)):
+        logger.log('%% %d %.6f\n' % (xAxis[i], yAxis[i]))
+
+    # Record detailed results
+    logger.log('> GA Runtime = %.4f sec\n' % (endT - startT))
+    logger.log('> Global minimum distance: %.6f\n' % globalRoute.getDistance())
+    logger.log('> Final Route:\n%s\n' % globalRoute)
+
+    # Plot
+    figPath = os.path.join(figSaveDir, '%s.png' % logger.time_tag)
+    plotGD(xAxis, yAxis, label='baseline', logr=logger, save=True, saveFigPath=figPath, show=True)
+
+
+if __name__ == '__main__':
+    logger = Logger()
+    runGA4mTSP()
+    logger.close()

@@ -2,9 +2,12 @@
 The main helper class for Genetic Algorithm to perform
 crossover, mutation on populations to evolve them
 """
-from population import *
+import random
+
 from globals import *
+from population import Population
 from city import City, Cities
+from routes import Routes
 
 
 class GA:

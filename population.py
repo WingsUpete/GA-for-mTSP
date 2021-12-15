@@ -1,4 +1,4 @@
-from routes import *
+from routes import Routes
 
 
 class Population:

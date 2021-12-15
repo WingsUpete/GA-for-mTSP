@@ -1,5 +1,8 @@
+import random
+
 from globals import *
 from city import City, Cities
+from util import route_lengths
 
 
 class Routes:
@@ -111,6 +114,7 @@ class Routes:
             for j in range(self.routeLengths[i]):
                 subRouteStr.append(str(self.getCity(i, j).id))
             geneString += ' --> '.join(subRouteStr)
-            geneString += '\n'
+            if i != numTrucks - 1:
+                geneString += '\n'
 
         return geneString
