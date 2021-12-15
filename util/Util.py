@@ -2,8 +2,6 @@ import random
 
 import matplotlib.pyplot as plt
 
-from globals import numCities, numSalesmen
-
 
 def random_range(n, total):
     """Return a randomly chosen list of n positive integers summing to total.
@@ -13,20 +11,20 @@ def random_range(n, total):
     return [a - b for a, b in zip(dividers + [total], [0] + dividers)]
 
 
-def route_lengths():
+def route_lengths(nCities, nSalesmen):
     """
     Randomly distribute number of cities to subroutes
     Maximum and minimum values are maintained to reach optimal result
     """
-    upper = (numCities + numSalesmen - 1)
-    fa = upper / numSalesmen * 1.6  # max route length
-    fb = upper / numSalesmen * 0.6  # min route length
-    a = random_range(numSalesmen, upper)
+    upper = (nCities + nSalesmen - 1)
+    fa = upper / nSalesmen * 1.6  # max route length
+    fb = upper / nSalesmen * 0.6  # min route length
+    a = random_range(nSalesmen, upper)
     while 1:
         if all(fb < i < fa for i in a):
             break
         else:
-            a = random_range(numSalesmen, upper)
+            a = random_range(nSalesmen, upper)
     return a
 
 

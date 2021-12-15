@@ -1,6 +1,6 @@
 import random
 
-from globals import *
+import globals
 from .city import City, Cities
 from util import route_lengths
 
@@ -17,9 +17,9 @@ class Routes:
         # 1D (n-1,) array having routes in a series - used during crossover operation
         self.base = []
         # 1D (m,) array having route lengths (here, route length = number of nodes)
-        self.routeLengths = route_lengths()
+        self.routeLengths = route_lengths(nCities=Cities.numberOfCities(), nSalesmen=globals.numSalesmen)
 
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             self.routes.append([])
 
         # fitness value and total distance of all routes
@@ -45,7 +45,7 @@ class Routes:
         random.shuffle(self.base)
 
         k = 0
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             self.routes[i].append(Cities.getCity(0))  # add same first node for each route
             for j in range(self.routeLengths[i] - 1):
                 self.routes[i].append(self.base[k])  # add shuffled values for rest
@@ -82,7 +82,7 @@ class Routes:
         if self.distance == 0:
             routeDistance = 0
 
-            for i in range(numSalesmen):
+            for i in range(globals.numSalesmen):
                 for j in range(self.routeLengths[i]):
                     fromCity = self.getCity(i, j)
 
@@ -108,13 +108,13 @@ class Routes:
         Returns routes in the form of a string
         """
         geneString = ''
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             geneString += 'Truck %d [len = %d]: ' % (i, self.routeLengths[i])
             subRouteStr = []
             for j in range(self.routeLengths[i]):
                 subRouteStr.append(str(self.getCity(i, j).id))
             geneString += ' --> '.join(subRouteStr)
-            if i != numSalesmen - 1:
+            if i != globals.numSalesmen - 1:
                 geneString += '\n'
 
         return geneString

@@ -1,6 +1,6 @@
 import random
 
-from globals import *
+import globals
 from entity import Population, City, Cities, Routes
 
 
@@ -17,7 +17,7 @@ class GABaseline:
 
         elitismOffset = 0
         # If fittest chromosome has to be passed directly to next generation
-        if elitism:
+        if globals.elitism:
             newPopulation.saveRoute(0, pop.getFittest())
             elitismOffset = 1
 
@@ -45,34 +45,34 @@ class GABaseline:
         startPos = 0
         endPos = 0
         while startPos >= endPos:
-            startPos = random.randint(1, numCities - 1)
-            endPos = random.randint(1, numCities - 1)
+            startPos = random.randint(1, globals.numCities - 1)
+            endPos = random.randint(1, globals.numCities - 1)
 
         parent1.base = [parent1.routes[0][0]]
         parent2.base = [parent2.routes[0][0]]
 
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             for j in range(1, parent1.routeLengths[i]):
                 parent1.base.append(parent1.routes[i][j])
 
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             for j in range(1, parent2.routeLengths[i]):
                 parent2.base.append(parent2.routes[i][j])
 
-        for i in range(1, numCities):
+        for i in range(1, globals.numCities):
             if i < endPos < startPos:
                 child.base[i] = parent1.base[i]
 
-        for i in range(numCities):
+        for i in range(globals.numCities):
             if not (child.containsCity(parent2.base[i])):
-                for i1 in range(numCities):
+                for i1 in range(globals.numCities):
                     if child.base[i1].checkNull():
                         child.base[i1] = parent2.base[i]
                         break
 
         k = 0
         child.base.pop(0)
-        for i in range(numSalesmen):
+        for i in range(globals.numSalesmen):
             child.routes[i].append(Cities.getCity(0))  # add same first node for each routes
             for j in range(child.routeLengths[i] - 1):
                 child.routes[i].append(child.base[k])  # add shuffled values for rest
@@ -87,8 +87,8 @@ class GABaseline:
         index1 = 0
         index2 = 0
         while index1 == index2:
-            index1 = random.randint(0, numSalesmen - 1)
-            index2 = random.randint(0, numSalesmen - 1)
+            index1 = random.randint(0, globals.numSalesmen - 1)
+            index2 = random.randint(0, globals.numSalesmen - 1)
         # print ('Indexes selected: ' + str(index1) + ',' + str(index2))
 
         # generate replacement range for 1
@@ -109,7 +109,7 @@ class GABaseline:
         swap1 = []  # values from 1
         swap2 = []  # values from 2
 
-        if random.randrange(1) < mutationRate:
+        if random.randrange(1) < globals.mutationRate:
             # pop all the values to be replaced
             for i in range(route1startPos, route1lastPos + 1):
                 swap1.append(route.routes[index1].pop(route1startPos))
@@ -132,9 +132,9 @@ class GABaseline:
         """
         Tournament Selection: choose a random set of chromosomes and find the fittest among them
         """
-        tournament = Population(tournamentSize, False)
+        tournament = Population(globals.tournamentSize, False)
 
-        for i in range(tournamentSize):
+        for i in range(globals.tournamentSize):
             randomInt = random.randint(0, pop.populationSize - 1)
             tournament.saveRoute(i, pop.getRoute(randomInt))
 

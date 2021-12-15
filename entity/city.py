@@ -1,10 +1,11 @@
 import math
 import random
 
-from globals import *
+import globals
 
 
 class City:
+
     """
     Represents nodes in the problem graph or network.
     Location coordinates can be passed while creating the object or they will be assigned random values.
@@ -13,8 +14,8 @@ class City:
     def __init__(self, x=None, y=None, cid=-1):
         self.id = cid
         if x is None and y is None:
-            self.x = random.randint(0, xMax)
-            self.y = random.randint(0, yMax)
+            self.x = random.randint(0, globals.xMax)
+            self.y = random.randint(0, globals.yMax)
         else:
             self.x = x
             self.y = y
@@ -23,7 +24,9 @@ class City:
         """
         Returns distance to the dustbin passed as argument
         """
-        return math.sqrt(math.pow(self.x - ct.x, 2) + math.pow(self.y - ct.y, 2))
+        distance = math.sqrt(math.pow(self.x - ct.x, 2) + math.pow(self.y - ct.y, 2))
+        Cities.distCalCnt += 1
+        return distance
 
     def __str__(self):
         """
@@ -44,6 +47,7 @@ class Cities:
     Holds all the dustbin objects and is used for creation of chromosomes by jumbling their sequence
     """
     cities = []
+    distCalCnt = 0
 
     @classmethod
     def addCity(cls, ct):
