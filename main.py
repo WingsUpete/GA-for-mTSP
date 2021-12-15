@@ -62,16 +62,17 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
     logr.log('\t>> Generations = %d, PopulationSize = %d, TournamentSize = %d\n' %
              (globals.numGenerations, globals.populationSize, globals.tournamentSize))
     genCnt = 0
+    distCalCnt = 0
     xAxis = []  # Generation count
     yAxis = []  # Fittest value (distance)
     startT = time.time()
     GA_Iterations = pbar(range(globals.numGenerations)) if pbar else range(globals.numGenerations)
     for i in GA_Iterations:
-        if maxNDC != -1 and Cities.distCalCnt > maxNDC:
-            break
-
         pop = GA.evolvePopulation(pop)
         localRoute = pop.getFittest()
+
+        if maxNDC != -1 and Cities.distCalCnt > maxNDC:
+            break
 
         if globalRoute.getDistance() > localRoute.getDistance():
             globalRoute = localRoute
@@ -79,6 +80,7 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
         yAxis.append(localRoute.getDistance())
         xAxis.append(genCnt + 1)
         genCnt += 1
+        distCalCnt = Cities.distCalCnt
     endT = time.time()
 
     # Record data
@@ -88,7 +90,7 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
 
     # Record detailed results
     logr.log('> Finished %d generations with %d distance calculations. GA Runtime = %.4f sec\n'
-             % (genCnt, Cities.distCalCnt, endT - startT))
+             % (genCnt, distCalCnt, endT - startT))
     logr.log('> Final distance: %.6f\n' % globalRoute.getDistance())
     logr.log('> Final Route:\n%s\n' % globalRoute)
 
