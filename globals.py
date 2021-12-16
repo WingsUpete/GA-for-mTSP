@@ -12,7 +12,7 @@ figSaveDir = 'fig/'
 if not os.path.exists(figSaveDir):
     os.mkdir(figSaveDir)
 
-seedValue = 1   # TODO: if random seed is set, is it meaningful for us to repeat running 30 times?
+seedValue = None   # if random seed is set, is it meaningful for us to repeat running 30 times? Set to None now
 
 # GA settings
 numGenerations = 70
