@@ -9,9 +9,11 @@
 
 # Logs
 log/
+!res/**/log/
 
 # Fig
 fig/
+!res/**/fig/
 
 # Data
 instances/
