@@ -23,7 +23,7 @@ mutationRate = 0.02
 elitism = True  # If fittest chromosome has to be passed directly to next generation
 
 # Salesmen
-numSalesmen = 10
+numSalesmen = 5
 
 # Defines range for coordinates when cities are randomly scattered
 xMax = 1000
