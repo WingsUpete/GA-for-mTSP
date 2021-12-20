@@ -47,6 +47,24 @@ def plotGD(xs, ys, label='GA', logr=None, save=True, saveFigPath=None, show=Fals
         plt.show()
 
 
+def plotGDs(xs_baseline, ys_baseline, xs_algo, ys_algo, algoLabel='JingranGA', save=True, saveFigPath=None, show=False):
+    plt.figure()
+    plt.plot(xs_baseline, ys_baseline, color='orange', label='baseline')
+    plt.plot(xs_algo, ys_algo, color='purple', label=algoLabel)
+    plt.title('Generation - Distance Curve')
+    plt.xlabel('Generation')
+    plt.ylabel('Distance')
+    plt.legend(loc='upper right')
+    plt.tight_layout()
+
+    if save:
+        plt.savefig(saveFigPath)
+        print('> Generation - Distance curve saved to %s.\n' % saveFigPath)
+
+    if show:
+        plt.show()
+
+
 def path2FileNameWithoutExt(path):
     """
     get file name without extension from path
