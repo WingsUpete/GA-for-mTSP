@@ -72,27 +72,33 @@ def plotGDWithLog(log_path, label='GA', save=True, saveFigPath=None, show=True):
     plotGD(xAxis, yAxis, label=label, save=save, saveFigPath=saveFigPath, show=show)
 
 
-def extractFinalDistFromLog(log_path):
+def extractResFromLog(log_path, label):
     if not os.path.exists(log_path):
-        sys.stderr.write('[extractFinalDistFromLog] %s does not exist!\n' % log_path)
+        sys.stderr.write('[extractResFromLog] %s does not exist!\n' % log_path)
         exit(-1000)
 
     with open(log_path) as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip()
-            if line.startswith('> Final distance'):
-                return float(line.split(' ')[-1])
+            if label == 'distance':
+                if line.startswith('> Final distance'):
+                    return float(line.split(' ')[-1])
+            elif label == 'runtime':
+                if line.startswith('> Finished'):
+                    return float(line.split(' ')[-2])
+            else:
+                sys.stderr.write('[extractResFromLog] label="%s" does not exist!\n' % label)
 
 
-def extractFinalDistListFromLogDir(log_dir):
+def extractResListFromLogDir(log_dir, label):
     if not os.path.exists(log_dir):
-        sys.stderr.write('[extractFinalDistListFromLogDir] %s does not exist!\n' % log_dir)
+        sys.stderr.write('[extractResFromLogDir] %s does not exist!\n' % log_dir)
         exit(-1001)
 
     res = []
     for file in os.listdir(log_dir):
-        res.append(extractFinalDistFromLog(os.path.join(log_dir, file)))
+        res.append(extractResFromLog(os.path.join(log_dir, file), label=label))
     return res
 
 
@@ -102,5 +108,6 @@ if __name__ == '__main__':
     # plotGDWithLog(log_path=logPath, label='baseline', save=False, show=True)
     # print(extractFinalDistFromLog(log_path=logPath))
 
-    logDir = '../log/mtsp100_baseline_30_5_1000_100_10_20211216_03_35_04/'
-    print(extractFinalDistListFromLogDir(log_dir=logDir))
+    logDir = '../res/baseline/log/mtsp51_baseline_30_5_1000_100_10_20211216_16_12_09/'
+    print(extractResListFromLogDir(log_dir=logDir, label='distance'))
+    print(extractResListFromLogDir(log_dir=logDir, label='runtime'))
