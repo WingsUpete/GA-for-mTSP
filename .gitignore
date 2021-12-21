@@ -14,6 +14,3 @@ log/
 # Fig
 fig/
 !res/**/fig/
-
-# Data
-instances/
