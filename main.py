@@ -8,7 +8,8 @@ import progressbar
 
 import globals
 from entity import City, Cities, Population
-from ga import GABaseline, GAMyAlgo
+from baseline import GABaseline
+from JingranGA import *
 from util import Logger, plotGD
 
 logging.getLogger('matplotlib.font_manager').disabled = True
@@ -49,12 +50,7 @@ def runGA4mTSP(dataPath=None, GA_type=globals.ALGO_DEFAULT, logr=None, maxNDC=gl
     logr.log('> Initial distance: %.6f\n' % globalRoute.getDistance())
 
     # Specify GA
-    if GA_type == 'baseline':
-        GA = GABaseline
-    elif GA_type == 'myAlgo':
-        GA = GAMyAlgo
-    else:
-        GA = GABaseline
+    GA = GABaseline
 
     # Start GA
     logr.log('> Starting running GA.\n')
@@ -141,6 +137,11 @@ if __name__ == '__main__':
         FLAGS.data = None if FLAGS.data == 'None' else FLAGS.data
 
     # Run GA
-    runGA4mTSP(dataPath=FLAGS.data, GA_type=FLAGS.ga, logr=logger, maxNDC=FLAGS.distCal, showPbar=(FLAGS.pbar == 1))
+    if FLAGS.ga == 'baseline':
+        runGA4mTSP(dataPath=FLAGS.data, GA_type=FLAGS.ga, logr=logger, maxNDC=FLAGS.distCal, showPbar=(FLAGS.pbar == 1))
+    else:
+        jingran_socool = JingranGA(logger=logger)
+        jingran_socool.fit(FLAGS.data)
+        jingran_socool.print_best()
 
     logger.close()
