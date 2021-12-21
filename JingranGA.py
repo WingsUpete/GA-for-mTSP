@@ -106,7 +106,6 @@ class Individual:
 # individuals 保存种群，offsprings 保存选择交叉后获得的子代
 # survivals，把父代和子代放在一起，保存较好的个体
 class Population:
-
     def __init__(self):
         self.individuals = []
         self.offsprings = []

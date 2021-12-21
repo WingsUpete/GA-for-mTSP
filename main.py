@@ -9,7 +9,7 @@ import progressbar
 import globals
 from entity import City, Cities, Population
 from baseline import GABaseline
-from JingranGA import *
+from JingranGA import num_of_cal_pairs, JingranGA
 from util import Logger, plotGD
 
 logging.getLogger('matplotlib.font_manager').disabled = True
