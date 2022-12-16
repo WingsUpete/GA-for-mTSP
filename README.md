@@ -36,7 +36,10 @@ Consider a graph `G = (V, A)` where `V` is the set of `n` nodes and `A` is the s
 
 **Let the depot be 1 (the first city)**. The objective function is now formulated as follow:
 
-<img src="https://render.githubusercontent.com/render/math?math=\min%20\sum_{i=1}^n%20\sum_{j=1}^n%20c_{i,%20j}%20x_{i,%20j}%20%2b%20m%20c_m," alt="objective function" style="zoom:150%;" />
+```math
+\min \sum_{i=1}^n \sum_{j=1}^n c_{i, j} x_{i, j} + m c_m
+```
+<!-- img src="https://render.githubusercontent.com/render/math?math=\min%20\sum_{i=1}^n%20\sum_{j=1}^n%20c_{i,%20j}%20x_{i,%20j}%20%2b%20m%20c_m," alt="objective function" style="zoom:150%;" /-->
 
 subject to:
 
